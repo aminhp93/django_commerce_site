@@ -53,6 +53,9 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'checkout',
+    'stripe',
+
     
 ]
 
@@ -148,6 +151,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 if DEBUG:
+    # STATICFILES_DIRS = [os.path.join(BASE_DIR, "ecommerce_sites", "static")]
     MEDIA_URL = '/media/'
     STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "ecommerce_sites", "static", "static_only")
     MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "ecommerce_sites", "static", "media")
@@ -189,7 +193,15 @@ ACCOUNT_PASSWORD_MIN_LENGTH = 6
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 
 
+# strip stuff
 
+# test keys
+STRIPE_PUBLISHABLE_KEY = 'pk_test_wVb4SkD8oWEtxxdOF8CEAsRc'
+STRIPE_SECRET_KEY = 'sk_test_Nl5Rpmr44mrC2hhpbSHfI1nZ'
+
+# live keys
+# STRIPE_PUBLISHABLE_KEY = ''
+# STRIPE_SECRET_KEY = ''
 
 
 
