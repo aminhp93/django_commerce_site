@@ -1,7 +1,31 @@
 from django.shortcuts import render
+from .forms import contactForm
+
+from django.conf import settings
+from django.core.mail import send_mail
 
 # Create your views here.
 def contact(request):
-	context = locals()
+	title = 'Contact'
+	form = contactForm(request.POST or None)
+	confirm_message = None
+
+	if form.is_valid():
+		print request.POST
+		print form.cleaned_data['email']
+		name = form.cleaned_data['name']
+		comment = form.cleaned_data['comment']
+		subject = 'Mesasge from MYSITE.com'
+		message = '%s %s' %(comment, name)
+		emailFrom = form.cleaned_data['email']
+		emailTo = [settings.EMAIL_HOST_USER]
+		send_mail(subject, message, emailFrom, emailTo, fail_silently=True)
+		title = 'Thanks'
+		confirm_message = 'Thank for the message. We will get right back to you.'
+		form = None
+
+
+	context = {'title': title, 'form': form, 'confirm_message': confirm_message}
+	# context = locals()
 	template = 'contact.html'
 	return render(request, template, context)
