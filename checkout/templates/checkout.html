@@ -29,26 +29,26 @@ function stripeResponseHandler(status, response) {
 {% endblock %} 
 
 {% block jquery %}
-$(function() {
-  var $form = $('#payment-form');
-  $form.submit(function(event) {
-    // Disable the submit button to prevent repeated clicks:
-    $form.find('.submit').prop('disabled', true);
+    $(function() {
+      var $form = $('#payment-form');
+      $form.submit(function(event) {
+        // Disable the submit button to prevent repeated clicks:
+        $form.find('.submit').prop('disabled', true);
 
-    // Request a token from Stripe:
-    Stripe.card.createToken($form, stripeResponseHandler);
+        // Request a token from Stripe:
+        Stripe.card.createToken($form, stripeResponseHandler);
 
-    // Prevent the form from being submitted:
-    return false;
-  });
-});
+        // Prevent the form from being submitted:
+        return false;
+      });
+    });
 
 {% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-sm-6 col-sm-offset-3">
-        <form action="/your-charge-code" method="POST" id="payment-form">{% csrf_token %}
+        <form action="" method="POST" id="payment-form">{% csrf_token %}
             <span class="payment-errors"></span>
             <div class="form-row">
                 <label>

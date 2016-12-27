@@ -12,18 +12,23 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 @login_required
 def checkout(request):
 	publishKey = settings.STRIPE_PUBLISHABLE_KEY
+	print request.user.userstripe.stripe_id
+	customer_id = request.user.userstripe.stripe_id
 	if request.method == 'POST':
 		print request.POST
 		token = request.POST['stripeToken']
 		print token
 
 		try:
-		  charge = stripe.Charge.create(
+			customer = stripe.Customer.retrieve(customer_id)
+			customer.sources.create(source=token)
+		 	charge = stripe.Charge.create(
 		      amount=1000, # Amount in cents
 		      currency="usd",
-		      source=token,
+		      # source=token,
+		      customer = customer,
 		      description="Example charge"
-		  )
+		  	)
 		except stripe.error.CardError as e:
 		  # The card has been declined
 		  pass
